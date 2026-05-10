@@ -1,0 +1,162 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #f0f4f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  gap: 16px;
+  flex: 1;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+p {
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+.camera {
+  width: 100%;
+  border-radius: 12px;
+  border: 3px solid #534AB7;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #534AB7;
+  color: white;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #3c3489;
+}
+
+button:first-child {
+  background: transparent;
+  color: #534AB7;
+  border: 2px solid #534AB7;
+  width: auto;
+  padding: 8px 16px;
+  align-self: flex-start;
+  font-size: 14px;
+}
+
+.number-inputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.number-inputs input {
+  width: 64px;
+  height: 64px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  color: #1a1a2e;
+}
+
+.number-inputs input:focus {
+  border-color: #534AB7;
+}
+
+.card-display {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.number-badge {
+  width: 60px;
+  height: 60px;
+  background: #534AB7;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.solution-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: #534AB7;
+}
+
+.solutions-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.solution-item {
+  width: 100%;
+  background: #f8f7ff;
+  border: 1px solid #e0deff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-family: monospace;
+  color: #1a1a2e;
+}
+
+.equals {
+  font-weight: 700;
+  color: #534AB7;
+}
+
+.no-solution {
+  background: #fff5f5;
+  border: 1px solid #ffdddd;
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+  font-size: 16px;
+  color: #cc0000;
+}
