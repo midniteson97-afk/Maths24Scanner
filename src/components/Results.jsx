@@ -1,6 +1,6 @@
 function solve24(nums) {
   const ops = ['+', '-', '*', '/']
-  const results = new Set()
+  const results = []
 
   function applyOp(a, b, op) {
     if (op === '+') return a + b
@@ -24,25 +24,44 @@ function solve24(nums) {
   }
 
   function evaluate(expr) {
-    if (typeof expr === 'number') return { val: expr, str: String(expr) }
+    if (typeof expr === 'number') {
+      return { val: expr, steps: [], label: String(expr) }
+    }
     const [a, op, b] = expr
     const left = evaluate(a)
     const right = evaluate(b)
-    if (left.val === null || right.val === null) return { val: null, str: '' }
+    if (left.val === null || right.val === null) return { val: null, steps: [], label: '' }
     const val = applyOp(left.val, right.val, op)
-    const str = `(${left.str} ${sym(op)} ${right.str})`
-    return { val, str }
+    if (val === null) return { val: null, steps: [], label: '' }
+
+    // Normalize commutative operations to filter duplicates
+    let stepKey
+    if (op === '+' || op === '*') {
+      const pair = [left.label, right.label].sort().join(op)
+      stepKey = pair
+    } else {
+      stepKey = `${left.label}${op}${right.label}`
+    }
+
+    if (val < 0 || !Number.isInteger(val)) return { val: null, steps: [], label: '' }
+const stepDisplay = `${left.label} ${sym(op)} ${right.label} = ${val}`
+    return {
+      val,
+      steps: [...left.steps, ...right.steps, { display: stepDisplay, key: stepKey }],
+      label: String(val)
+    }
   }
 
-  function buildTrees(nums) {
-    if (nums.length === 1) return nums.map(n => n)
+  function buildTrees(arr) {
+    if (arr.length === 1) return [arr[0]]
     const trees = []
-    for (let i = 0; i < nums.length; i++) {
-      for (let j = 0; j < nums.length; j++) {
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr.length; j++) {
         if (i === j) continue
-        const rest = nums.filter((_, k) => k !== i && k !== j)
+        const rest = arr.filter((_, k) => k !== i && k !== j)
         for (const op of ops) {
-          for (const subtree of buildTrees([...rest, [nums[i], op, nums[j]]])) {
+          const node = [arr[i], op, arr[j]]
+          for (const subtree of buildTrees([...rest, node])) {
             trees.push(subtree)
           }
         }
@@ -51,16 +70,27 @@ function solve24(nums) {
     return trees
   }
 
+  const seen = new Set()
+
   for (const perm of permutations(nums)) {
     for (const tree of buildTrees(perm)) {
-      const { val, str } = evaluate(tree)
+      const { val, steps } = evaluate(tree)
       if (val !== null && Math.abs(val - 24) < 1e-9) {
-        results.add(str)
+        const key = steps.map(s => s.key).join('|')
+        if (!seen.has(key)) {
+          seen.add(key)
+          results.push({
+            steps: steps.map(s => s.display),
+            complexity: steps.length
+          })
+        }
       }
     }
   }
 
-  return [...results]
+  return results
+    .sort((a, b) => a.complexity - b.complexity)
+    .slice(0, 10)
 }
 
 export default function Results({ numbers, onBack }) {
@@ -68,7 +98,7 @@ export default function Results({ numbers, onBack }) {
 
   return (
     <div className="screen">
-      <button onClick={onBack}>← Back</button>
+      <button className="back-btn" onClick={onBack}>← Back</button>
       <h1>Results</h1>
       <div className="card-display">
         {numbers.map((n, i) => (
@@ -81,12 +111,22 @@ export default function Results({ numbers, onBack }) {
         </div>
       ) : (
         <>
-          <p className="solution-count">{solutions.length} solution{solutions.length > 1 ? 's' : ''} found</p>
+          <p className="solution-count">
+            {solutions.length} solution{solutions.length > 1 ? 's' : ''} found
+          </p>
           <div className="solutions-list">
-            {solutions.map((s, i) => (
+            {solutions.map((sol, i) => (
               <div key={i} className="solution-item">
-                <span>{s}</span>
-                <span className="equals">= 24</span>
+                <div className="solution-flow">
+                  {sol.steps.map((step, j) => (
+                    <span key={j} className="solution-flow-step">
+                      <span className="step-expr">{step}</span>
+                      {j < sol.steps.length - 1 && (
+                        <span className="step-arrow"> → </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

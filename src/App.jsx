@@ -1,11 +1,10 @@
 import { useState } from "react"
 import "./App.css"
-import Camera from "./components/Camera"
+import NumberPad from "./components/NumberPad"
 import Results from "./components/Results"
-import Manual from "./components/Manual"
 
 export default function App() {
-  const [screen, setScreen] = useState("camera")
+  const [screen, setScreen] = useState("pad")
   const [numbers, setNumbers] = useState([])
 
   function handleNumbers(nums) {
@@ -15,14 +14,11 @@ export default function App() {
 
   return (
     <div className="app">
-      {screen === "camera" && (
-        <Camera onNumbers={handleNumbers} onManual={() => setScreen("manual")} />
-      )}
-      {screen === "manual" && (
-        <Manual onNumbers={handleNumbers} onBack={() => setScreen("camera")} />
+      {screen === "pad" && (
+        <NumberPad onSolve={handleNumbers} />
       )}
       {screen === "results" && (
-        <Results numbers={numbers} onBack={() => setScreen("camera")} />
+        <Results numbers={numbers} onBack={() => setScreen("pad")} />
       )}
     </div>
   )
