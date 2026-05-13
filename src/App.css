@@ -67,7 +67,27 @@ h1 {
 .starburst {
   position: absolute;
   inset: 0;
-  display: block;
+  background: conic-gradient(
+    #2b4db5 0deg, #c9960c 10deg,
+    #2b4db5 20deg, #c9960c 30deg,
+    #2b4db5 40deg, #c9960c 50deg,
+    #2b4db5 60deg, #c9960c 70deg,
+    #2b4db5 80deg, #c9960c 90deg,
+    #2b4db5 100deg, #c9960c 110deg,
+    #2b4db5 120deg, #c9960c 130deg,
+    #2b4db5 140deg, #c9960c 150deg,
+    #2b4db5 160deg, #c9960c 170deg,
+    #2b4db5 180deg, #c9960c 190deg,
+    #2b4db5 200deg, #c9960c 210deg,
+    #2b4db5 220deg, #c9960c 230deg,
+    #2b4db5 240deg, #c9960c 250deg,
+    #2b4db5 260deg, #c9960c 270deg,
+    #2b4db5 280deg, #c9960c 290deg,
+    #2b4db5 300deg, #c9960c 310deg,
+    #2b4db5 320deg, #c9960c 330deg,
+    #2b4db5 340deg, #c9960c 350deg,
+    #2b4db5 360deg
+  );
 }
 
 .starburst::before {
@@ -77,7 +97,7 @@ h1 {
   background: linear-gradient(
     to bottom right,
     transparent 49%,
-    rgba(0,0,0,0.35) 49%, rgba(0,0,0,0.35) 51%,
+    rgba(0,0,0,0.6) 49%, rgba(0,0,0,0.6) 51%,
     transparent 51%
   );
 }
@@ -89,11 +109,10 @@ h1 {
   background: linear-gradient(
     to bottom left,
     transparent 49%,
-    rgba(0,0,0,0.35) 49%, rgba(0,0,0,0.35) 51%,
+    rgba(0,0,0,0.6) 49%, rgba(0,0,0,0.6) 51%,
     transparent 51%
   );
 }
-
 /* ── CENTER SQUARE ── */
 .card-center {
   position: absolute;
@@ -156,12 +175,11 @@ h1 {
   font-family: 'Arial Black', Arial, sans-serif;
   color: black;
   z-index: 2;
+  -webkit-text-stroke: 3px white;
+  paint-order: stroke fill;
   text-shadow: 
-    2px 2px 0px rgba(0,0,0,0.4),
-    -1px -1px 0px rgba(255,255,255,0.2);
-  -webkit-text-stroke: 1px rgba(0,0,0,0.3);
+    2px 2px 4px rgba(0,0,0,0.4);
 }
-
 /* ── NUMBER PAD ── */
 .numpad {
   display: grid;
